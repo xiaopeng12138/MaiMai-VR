@@ -3772,6 +3772,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11401046, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: renderModelPrefab
+      value: 
+      objectReference: {fileID: 3334354508630075287, guid: 6a6339d138edce348aa43b0a1f95a698,
+        type: 3}
+    - target: {fileID: 11401046, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: useFingerJointHover
       value: 0
       objectReference: {fileID: 0}
@@ -3783,6 +3788,11 @@ PrefabInstance:
       propertyPath: useHoverSphere
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11450312, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
+      propertyPath: renderModelPrefab
+      value: 
+      objectReference: {fileID: 1332895531519361073, guid: c6137d159d7c88049806fbc773b8d754,
+        type: 3}
     - target: {fileID: 11450312, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: useFingerJointHover
       value: 0

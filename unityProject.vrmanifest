@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.maimaivr.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "D:\\maimaivr_choi\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "D:\\MaiMai-VR\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
           "name": "maimai VR [Testing]"
