@@ -8,12 +8,6 @@ using UnityEngine;
 public class WashingMachineLightController : MonoBehaviour
 {
     public Light[] lights;
-    public float maxIntensity = 4f;
-    public float minIntensity = 2f;
-    public float time = 1f;
-    float currentIntensity = 0f;
-    float progress = 0;
-    bool increasing = true;
 
     int count = 0;
 
@@ -36,7 +30,6 @@ public class WashingMachineLightController : MonoBehaviour
     {
         proc = Process.GetProcessesByName("maimai_dump_")[0];
         procBase = proc.MainModule.BaseAddress;
-        currentIntensity = minIntensity;
     }
 
     // Update is called once per frame
@@ -44,39 +37,11 @@ public class WashingMachineLightController : MonoBehaviour
     {
         IntPtr[] ptrArray = { ptrtoread, (IntPtr)0x3CD };
         if (proc != null && procBase != null) {
-            readBtnLight("maimai_dump_", ptrArray);
+            readLight("maimai_dump_", ptrArray);
         }
-            //IntPtr[] ptrArray = { ptrtoread, (IntPtr)0x408, (IntPtr)0x84, (IntPtr)0x34, (IntPtr)0xC, (IntPtr)0x5A4 };
-            //IntPtr[] ptrArray2 = { ptrtoread, (IntPtr)0x408, (IntPtr)0x84, (IntPtr)0x34, (IntPtr)0xC, (IntPtr)0x5A5 };
-            
-            //IntPtr bodyLEDValue1 = readPtr("maimai_dump_", ptrArray);
-            //IntPtr bodyLEDValue2 = readPtr("maimai_dump_", ptrArray2);
-            //UnityEngine.Debug.LogWarning("P1 raw intensity:" + (int)bodyLEDValue1 + " P2 raw intensity:" + (int)bodyLEDValue2);
-            //float[] intensity = new float[2];
-            //lights[0].intensity = (int)bodyLEDValue1 / 60;
-            //lights[1].intensity = (int)bodyLEDValue2 / 60;
-            
-            //if (progress > 1)
-            //{
-            //    progress = 0;
-            //    increasing = !increasing;
-            //}
-            //if (increasing == true)
-            //{
-            //    currentIntensity = Mathf.Lerp(minIntensity, maxIntensity, progress);
-            //}
-            //else
-            //{
-            //    currentIntensity = Mathf.Lerp(maxIntensity, minIntensity, progress);
-            //}
-            //foreach (Light l in lights)
-            //{
-            //    l.intensity = currentIntensity;
-            //}
-            //progress += Time.deltaTime / time;  
     }
 
-    public void readBtnLight(string pname, IntPtr[] offsets, bool debug = true, string module = null) {
+    public void readLight(string pname, IntPtr[] offsets, bool debug = true, string module = null) {
             IntPtr tmpptr = (IntPtr)0;
             Process handle = proc;
             IntPtr Base = procBase;
@@ -93,11 +58,10 @@ public class WashingMachineLightController : MonoBehaviour
             IntPtr ptr2 = IntPtr.Add(tmpptr, (int)offsets[1]);
             //Console.WriteLine("Light offset: " + ptr2);
 
+            //Yeah, it's shitstorm but it works anyway
+            //P1
             for (int i = 0; i < 8; i ++) {
                 Byte[] rgb_bytes = ReadBytes((IntPtr)handle.Handle, ptr2 + 1 + (i*4), 3);
-                //IntPtr rgb_int = (IntPtr)ReadInt64(ptr2 + (i*4), 4, false, handle.Handle);
-                //Console.WriteLine("[Light " + (i+1) + "] " + BitConverter.ToString(rgb_bytes));
-                //ptr2 = IntPtr.Add(tmpptr, 8);
                 string hex = "#" + BitConverter.ToString(rgb_bytes).Replace("-", string.Empty);
                 Color btnColor;
                 if (ColorUtility.TryParseHtmlString(hex, out btnColor)) {
@@ -106,68 +70,28 @@ public class WashingMachineLightController : MonoBehaviour
                     UnityEngine.Debug.LogWarning("WTF: " + hex + " failed to parse");
                 }
             }
-
-        }
-
-    public IntPtr readPtr(string pname, IntPtr[] offsets, bool debug = false, string module = null)
-    {
-
-        IntPtr tmpptr = (IntPtr)0;
-        Process handle = proc;
-        IntPtr Base = procBase;
-
-        for (int i = 0; i <= offsets.Length - 1; i++)
-        {
-            if (i == 0)
-            {
-                if (debug)
-                    UnityEngine.Debug.LogWarning(Base + "[Base] + " + offsets[i] + "[OFFSET 0]");
-                IntPtr ptr = IntPtr.Add(Base, (int)offsets[i]);
-                tmpptr = (IntPtr)ReadInt64(ptr, 8, false, handle.Handle);
-                if (debug)
-                    UnityEngine.Debug.LogWarning(" is " + tmpptr);
-            }
-            else
-            {
-                if (debug)
-                    UnityEngine.Debug.LogWarning(tmpptr + " + " + offsets[i] + "[OFFSET " + i + "]");
-                IntPtr ptr2 = IntPtr.Add(tmpptr, (int)offsets[i]);
-                if (i == offsets.Length - 1)
-                {
-                    tmpptr = (IntPtr)ReadInt64(ptr2, 1, true, handle.Handle);
+            
+            //P2
+            for (int i = 0; i < 8; i ++) {
+                Byte[] rgb_bytes = ReadBytes((IntPtr)handle.Handle, ptr2 + 69 + (i*4), 3);
+                string hex = "#" + BitConverter.ToString(rgb_bytes).Replace("-", string.Empty);
+                Color btnColor;
+                if (ColorUtility.TryParseHtmlString(hex, out btnColor)) {
+                    lights[i+8].color = btnColor;
+                } else {
+                    UnityEngine.Debug.LogWarning("WTF: " + hex + " failed to parse");
                 }
-                else
-                {
-                    tmpptr = (IntPtr)ReadInt64(ptr2, 8, false, handle.Handle);
-                }
-                if (debug)
-                    UnityEngine.Debug.LogWarning(" is " + tmpptr);
             }
+            
+            //Body LEDs
+            Byte[] led_intensity_p1 = ReadBytes((IntPtr)handle.Handle, ptr2 + 49, 1);
+            byte led_p1 = led_intensity_p1[0];
+            Byte[] led_intensity_p2 = ReadBytes((IntPtr)handle.Handle, ptr2 + 117, 1);
+            byte led_p2 = led_intensity_p2[0];
+            
+            lights[16].intensity = (int)led_p1 / 70;
+            lights[17].intensity = (int)led_p2 / 70;
         }
-        return tmpptr;
-    }
-
-    //static IntPtr getBase(Process handle, string module = null)
-    //{
-    //    ProcessModuleCollection modules = handle.Modules;
-    //    if (module != null)
-    //    {
-    //        for (int i = 0; i <= modules.Count - 1; i++)
-    //        {
-    //            if (modules[i].ModuleName == module)
-    //            {
-    //                return (IntPtr)modules[i].BaseAddress;
-    //            }
-    //        }
-    //        Console.WriteLine("Module Not Found");
-
-    //    }
-    //    else
-    //    {
-    //        return (IntPtr)handle.MainModule.BaseAddress;
-    //    }
-    //    return (IntPtr)0;
-    //}
 
     public Int64 ReadInt64(IntPtr Address, uint length = 4, bool isFinal = false, IntPtr? Handle = null)
     {
