@@ -1,6 +1,21 @@
 # Changelog
 
 ## Current version
+0.6
+- Unity changes
+  - Unity updated to 2019.4.25f1
+- Misc VR releated changes
+  - Added teleportation. Press thumb sticks to teleport. it might come in handy if you can't play in room scale mode.
+  - Fixed player orientation. No longer need to turn back around to see cabinet.
+- Adjusted collider for Q2 controller
+  - Special thanks to KonaKona on Discord for bug report and fix
+  - Because of this, playing this fork on openvr compatible headsets other than Quest 2 will face some issue. See #3 for more info.
+- Changed splash image (a.k.a "Made with Unity")
+- Implemented more LED hooks
+  - Now button lights on player 2 side and both body lights works.
+
+## Old versions
+
 0.5
 - Unity and VR libraries changes
   - Unity updated to 2019.4.19f1
@@ -23,8 +38,6 @@
   - Multiplayer function (P2 is not working at all - MaiSense limitation)
   - Graphics quality selection window at startup (Unity removed this in recent version)
   - Decoration cabs removed
-
-## Old versions
 
 0.4
 - Oculus headsets should work now
