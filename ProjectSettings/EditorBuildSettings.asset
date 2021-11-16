@@ -9,7 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Alternative Scenes/japarcade.unity
     guid: 524fc3618236e514889a075bf9e253ed
   m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7a0e2d42f6898d1448d0d57cfac190bb,
+      type: 2}
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 058129516a682ea4687ef5a0cfbe53c2,
       type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: d9e4a342f205f5a409e0d2d49f22892b,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 9803d8f25feedb24695e8cc0abbdf903,
       type: 2}

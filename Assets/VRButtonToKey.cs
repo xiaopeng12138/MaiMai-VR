@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using Valve.VR;
-using Valve.VR.InteractionSystem;
 using WindowsInput;
 
 public class VRButtonToKey : MonoBehaviour
@@ -126,16 +124,18 @@ public class VRButtonToKey : MonoBehaviour
     public VirtualKeyCode keyToPress;
     public AudioClip click;
     public Light lightTarget;
-    SteamVR_Action_Vibration haptic = new SteamVR_Action_Vibration();
-    //AudioSource audio;
+    public AudioSource audioSource;
+    public float frequency;
+    public float amplitude;
+    public OVRInput.Controller controllerMaskR = new OVRInput.Controller();
+    public OVRInput.Controller controllerMaskL = new OVRInput.Controller();
     // Start is called before the first frame update
         void Start()
         {
-        //Rigidbody rb = transform.gameObject.AddComponent<Rigidbody>();
-        //rb.constraints = RigidbodyConstraints.FreezeAll;
-        //audio = transform.gameObject.AddComponent<AudioSource>();
-        //audio.clip = click;
-        //audio.volume = 0.5f;
+        audioSource = transform.gameObject.AddComponent<AudioSource>();
+        audioSource.clip = click;
+        audioSource.volume = 0.8f;
+        lightTarget.gameObject.SetActive(false);
         }
 
         // Update is called once per frame
@@ -144,35 +144,33 @@ public class VRButtonToKey : MonoBehaviour
             
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            //Debug.LogWarning("Button down " + ((uint)keyToPress).ToString());
-            keybd_event(System.Convert.ToByte(keyToPress), (byte)MapVirtualKey((uint)keyToPress, 0), 0, UIntPtr.Zero);  
-            //SendKeyEvent((uint)keyToPress, true);
-            Hand hand = other.gameObject.transform.parent.transform.parent.gameObject.GetComponent<Hand>();
-        //hand.TriggerHapticPulse(1000, (other.gameObject.transform.parent.transform.parent.gameObject.GetComponent<Hand>().GetTrackedObjectVelocity().z * -100), other.gameObject.transform.parent.transform.parent.gameObject.GetComponent<Hand>().GetTrackedObjectVelocity().z * -10000);
-        hand.TriggerHapticPulse(0.1f, 1, 0.5f);
-        if (lightTarget != null) {
-            //lightTarget.gameObject.SetActive(true);
-        }
+    private void OnTriggerEnter(Collider other)
+    {
+        //Debug.Log(other.gameObject.name);
+        keybd_event(System.Convert.ToByte(keyToPress), (byte)MapVirtualKey((uint)keyToPress, 0), 0, UIntPtr.Zero);  
+        audioSource.Play();
+        lightTarget.gameObject.SetActive(true);
+        if (other.gameObject.name=="OVRControllerPrefabR")
+            OVRInput.SetControllerVibration(frequency, amplitude, controllerMaskR);
+        else
+            OVRInput.SetControllerVibration(frequency, amplitude, controllerMaskL);
     }
-
     private void OnTriggerStay(Collider other)
     {
-        //Hand hand = other.gameObject.transform.parent.transform.parent.gameObject.GetComponent<Hand>();
-        //hand.TriggerHapticPulse(0.1f, 1, 0.1f);
+        if (other.gameObject.name=="OVRControllerPrefabR")
+            OVRInput.SetControllerVibration(frequency, amplitude, controllerMaskR);
+        else
+            OVRInput.SetControllerVibration(frequency, amplitude, controllerMaskL);
     }
-
     private void OnTriggerExit(Collider other)
-        {
-        //Debug.LogWarning("Button up " + ((uint)keyToPress).ToString());
-        //SetForegroundWindow(System.Diagnostics.Process.GetProcessesByName("maimai_dump_")[0].MainWindowHandle);
+    {
+        
         keybd_event(System.Convert.ToByte(keyToPress), (byte)MapVirtualKey((uint)keyToPress, 0), 2, UIntPtr.Zero);
-        //SendKeyEvent((uint)keyToPress, false);
-        Hand hand = other.gameObject.transform.parent.transform.parent.gameObject.GetComponent<Hand>();
-        //hand.TriggerHapticPulse(10, (other.gameObject.transform.parent.transform.parent.gameObject.GetComponent<Hand>().GetTrackedObjectVelocity().z), other.gameObject.transform.parent.transform.parent.gameObject.GetComponent<Hand>().GetTrackedObjectVelocity().z * 100);
-        hand.TriggerHapticPulse(0.1f, 1, 0.3f);
-        //lightTarget.gameObject.SetActive(false);
+        lightTarget.gameObject.SetActive(false);
+        if (other.gameObject.name=="OVRControllerPrefabR")
+            OVRInput.SetControllerVibration(0f, 0f, controllerMaskR);
+        else
+            OVRInput.SetControllerVibration(0f, 0f, controllerMaskL);
     }
 
         public static void SendKeyEvent(uint keyCode, bool isDown)
