@@ -2,10 +2,10 @@
 Open Source VR environment for MaiMai DX or above
 
 # About this fork
-This project is a fork of HelloKS's Maimai-VR project. 
-Switched window capture package to: https://github.com/hecomi/uWindowCapture
-Touch communication protocol: https://github.com/Sucareto/Mai2Touch
-!!Currently ONLY SUPPORT OCULUS LINK/AirLink!! It May support Quest 1 controller but the hitbox is made for Quest 2 controller.
+- This project is a fork of HelloKS's Maimai-VR project. 
+- Switched window capture package to: https://github.com/hecomi/uWindowCapture
+- Touch communication protocol: https://github.com/Sucareto/Mai2Touch
+- !!Currently ONLY SUPPORT OCULUS LINK/AirLink!! It May support Quest 1 controller but the hitbox is made for Quest 2 controller.
 
 Please support your local arcade if you can!
 
