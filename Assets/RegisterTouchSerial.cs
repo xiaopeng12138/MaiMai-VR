@@ -23,12 +23,13 @@ using UnityEngine;
         {
             //Debug.Log("trigger Touch");
             Serial.ChangeTouch((int)Area, true);
+            Serial.SendTouch();
         }
 
         private void OnTriggerExit(Collider other)
         {
             Serial.ChangeTouch((int)Area, false);
-            Serial.ChangeTouch((int)Area, false);
+            Serial.ResetTouch();
         }
 
     }

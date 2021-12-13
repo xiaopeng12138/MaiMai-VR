@@ -12,6 +12,7 @@ using System.Text;
         byte[] incomPacket = new byte[6];
         byte[] settingPacket = new byte[6];
         static byte[] touchPacket = new byte[9];
+        static byte[] touchPacketReset = new byte[9];
         
         static bool startUp = false;
         float timer = 0; 
@@ -39,6 +40,8 @@ using System.Text;
             settingPacket[5] = 41;
             touchPacket[0] = 40;
             touchPacket[8] = 41;
+            touchPacketReset[0] = 40;
+            touchPacketReset[8] = 41;
             p1Serial.Open();
             Debug.Log("Serial Started");
         }
@@ -88,13 +91,13 @@ using System.Text;
                //Debug.Log("RecivePackage: "+incomPacket[0]+"-"+incomPacket[1]+"-"+incomPacket[2]+"-"+incomPacket[3]+"-"+incomPacket[4] +"-"+ incomPacket[5]);
             }
         }
-        private static void SendTouch()
+        public static void SendTouch()
         {
             if (startUp)
             {
+                p1Serial.Write(touchPacket, 0, 9);
                 //Debug.Log("trigger serial 2");
                 //Debug.Log(BitConverter.ToString(touchPacket));
-                p1Serial.Write(touchPacket, 0, 9);
             }
 
         }
@@ -103,9 +106,18 @@ using System.Text;
             if (startUp)
             {
                 ByteArrayExt.SetBit(touchPacket, Area+8, State);
-                p1Serial.Write(touchPacket, 0, 9);
                 //Debug.Log("Send:" + BitConverter.ToString(touchPacket));
                 //Debug.Log("trigger serial");
+            }
+
+        }
+        public static void ResetTouch()
+        {
+            if (startUp)
+            {
+                p1Serial.Write(touchPacketReset, 0, 9);
+                //Debug.Log("Send:" + BitConverter.ToString(touchPacket));
+                //Debug.Log("trigger serial reset");
             }
 
         }
