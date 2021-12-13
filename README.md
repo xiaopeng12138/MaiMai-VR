@@ -14,7 +14,7 @@ Open Source VR environment for MaiMai DX or above
 
 Please support your local arcade if you can!
 
-# Declaimer
+# Disclaimer
 - Please note this project is non-profit and has no affiliation with SEGA.
 - Do not use this in commercial/profitable scenarios.
 
