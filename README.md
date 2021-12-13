@@ -18,9 +18,6 @@ Please support your local arcade if you can!
 - Please note this project is non-profit and has no affiliation with SEGA.
 - Do not use this in commercial/profitable scenarios.
 
-# Changelog
-Please see Changes.md
-
 # How to use
 - Get Maimai DX somehow and do some configurations
 - Download [latest version of Maimai-VR](https://github.com/xiaopeng12138/MaiMai-VR/releases)
