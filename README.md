@@ -32,10 +32,4 @@ Please see Changes.md
 - Then start maimaivr
 - Enable somehow the maintenance mod of your maimai then exit maintenance mod.
 
-# ToDo
-- Add more user-adjustable settings (button audio volume etc.)
-- Add support for SteamVR and Oculus Link (IDK how to go back to SteamVR now XD)
-- Add support for multiple controllers (I can't debug other controllers so)
-- Update model to dx version
-
-Huge thanks to HelloKS and derole1
+Huge thanks to xiaopeng12138, HelloKS and derole1
