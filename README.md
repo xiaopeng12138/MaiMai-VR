@@ -1,11 +1,6 @@
 # MaiMai-VR
 Open Source VR environment for MaiMai DX or above
 
-# Changes in this fork
-- Improved Touch Detection
-- Improved Captured Window framerate
-
-
 # About this fork
 - This project is a fork of HelloKS's Maimai-VR project. 
 - Switched window capture package to: https://github.com/hecomi/uWindowCapture
@@ -14,9 +9,12 @@ Open Source VR environment for MaiMai DX or above
 
 Please support your local arcade if you can!
 
-# Disclaimer
+# Declaimer
 - Please note this project is non-profit and has no affiliation with SEGA.
 - Do not use this in commercial/profitable scenarios.
+
+# Changelog
+Please see Changes.md
 
 # How to use
 - Get Maimai DX somehow and do some configurations
@@ -29,4 +27,10 @@ Please support your local arcade if you can!
 - Then start maimaivr
 - Enable somehow the maintenance mod of your maimai then exit maintenance mod.
 
-Huge thanks to xiaopeng12138, HelloKS and derole1
+# ToDo
+- Add more user-adjustable settings (button audio volume etc.)
+- Add support for SteamVR and Oculus Link (IDK how to go back to SteamVR now XD)
+- Add support for multiple controllers (I can't debug other controllers so)
+- Update model to dx version
+
+Huge thanks to HelloKS and derole1
