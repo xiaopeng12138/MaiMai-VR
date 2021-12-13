@@ -4487,10 +4487,10 @@ MonoBehaviour:
   childWindowZDistance: 0.02
   partialWindowTitle_: Sinmai
   desktopIndex_: 0
-  captureMode: 2
+  captureMode: 1
   capturePriority: 0
   captureRequestTiming: 0
-  captureFrameRate: 60
+  captureFrameRate: 120
   drawCursor: 0
   updateTitle: 1
   searchAnotherWindowWhenInvalid: 0
