@@ -1,6 +1,11 @@
 # MaiMai-VR
 Open Source VR environment for MaiMai DX or above
 
+# Changes in this fork
+- Improved Touch Detection
+- Improved Captured Window framerate
+
+
 # About this fork
 - This project is a fork of HelloKS's Maimai-VR project. 
 - Switched window capture package to: https://github.com/hecomi/uWindowCapture
