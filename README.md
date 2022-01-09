@@ -9,7 +9,7 @@ Open Source VR environment for MaiMai DX or above
 
 Please support your local arcade if you can!
 
-I'm working on a completely new Version of MaiMai-VR with a new model now. This version is currently a little bit messy, so stay turn.
+**New Version: https://github.com/xiaopeng12138/MaiDXR**
 
 # Declaimer
 - Please note this project is non-profit and has no affiliation with SEGA.
